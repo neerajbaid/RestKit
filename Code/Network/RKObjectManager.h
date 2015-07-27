@@ -603,10 +603,10 @@ RKMappingResult, RKRequestDescriptor, RKResponseDescriptor;
  
  @see [RKObjectManager appropriateObjectRequestOperationWithObject:method:path:parameters:]
  */
-- (void)getObjectsAtPath:(NSString *)path
-              parameters:(NSDictionary *)parameters
-                 success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
-                 failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure;
+- (NSOperation *)getObjectsAtPath:(NSString *)path
+                       parameters:(NSDictionary *)parameters
+                          success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
+                          failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure;
 
 /**
  Creates an `RKObjectRequestOperation` with a `GET` request for the relationship with the given name of the given object, and enqueues it to the manager's operation queue.
@@ -623,11 +623,11 @@ RKMappingResult, RKRequestDescriptor, RKResponseDescriptor;
  @see [RKRouter URLForRelationship:ofObject:method:]
  @see [RKObjectManager appropriateObjectRequestOperationWithObject:method:path:parameters:]
  */
-- (void)getObjectsAtPathForRelationship:(NSString *)relationshipName
-                               ofObject:(id)object
-                             parameters:(NSDictionary *)parameters
-                                success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
-                                failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure;
+- (NSOperation *)getObjectsAtPathForRelationship:(NSString *)relationshipName
+                                        ofObject:(id)object
+                                      parameters:(NSDictionary *)parameters
+                                         success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
+                                         failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure;
 
 /**
  Creates an `RKObjectRequestOperation` with a `GET` request for the URL returned by the router for the given route name, and enqueues it to the manager's operation queue.
@@ -644,11 +644,11 @@ RKMappingResult, RKRequestDescriptor, RKResponseDescriptor;
  @see [RKRouter URLForRouteNamed:method:object:]
  @see [RKObjectManager appropriateObjectRequestOperationWithObject:method:path:parameters:]
  */
-- (void)getObjectsAtPathForRouteNamed:(NSString *)routeName
-                               object:(id)object
-                           parameters:(NSDictionary *)parameters
-                              success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
-                              failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure;
+- (NSOperation *)getObjectsAtPathForRouteNamed:(NSString *)routeName
+                                        object:(id)object
+                                    parameters:(NSDictionary *)parameters
+                                       success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
+                                       failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure;
 
 ///-------------------------------------------
 /// @name Making Object Requests for an Object
@@ -668,11 +668,11 @@ RKMappingResult, RKRequestDescriptor, RKResponseDescriptor;
  @see [RKRouter URLForObject:method:]
  @see [RKObjectManager appropriateObjectRequestOperationWithObject:method:path:parameters:]
  */
-- (void)getObject:(id)object
-             path:(NSString *)path
-       parameters:(NSDictionary *)parameters
-          success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
-          failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure;
+- (NSOperation *)getObject:(id)object
+                      path:(NSString *)path
+                parameters:(NSDictionary *)parameters
+                   success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
+                   failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure;
 
 /**
  Creates an `RKObjectRequestOperation` with a `POST` request for the given object, and enqueues it to the manager's operation queue.
@@ -686,11 +686,11 @@ RKMappingResult, RKRequestDescriptor, RKResponseDescriptor;
  @see [RKRouter URLForObject:method:]
  @see [RKObjectManager appropriateObjectRequestOperationWithObject:method:path:parameters:]
  */
-- (void)postObject:(id)object
-              path:(NSString *)path
-        parameters:(NSDictionary *)parameters
-           success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
-           failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure;
+- (NSOperation *)postObject:(id)object
+                       path:(NSString *)path
+                 parameters:(NSDictionary *)parameters
+                    success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
+                    failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure;
 
 /**
  Creates an `RKObjectRequestOperation` with a `PUT` request for the given object, and enqueues it to the manager's operation queue.
@@ -704,11 +704,11 @@ RKMappingResult, RKRequestDescriptor, RKResponseDescriptor;
  @see [RKRouter URLForObject:method:]
  @see [RKObjectManager appropriateObjectRequestOperationWithObject:method:path:parameters:]
  */
-- (void)putObject:(id)object
-             path:(NSString *)path
-       parameters:(NSDictionary *)parameters
-          success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
-          failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure;
+- (NSOperation *)putObject:(id)object
+                      path:(NSString *)path
+                parameters:(NSDictionary *)parameters
+                   success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
+                   failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure;
 
 /**
  Creates an `RKObjectRequestOperation` with a `PATCH` request for the given object, and enqueues it to the manager's operation queue.
@@ -722,11 +722,11 @@ RKMappingResult, RKRequestDescriptor, RKResponseDescriptor;
  @see [RKRouter URLForObject:method:]
  @see [RKObjectManager appropriateObjectRequestOperationWithObject:method:path:parameters:]
  */
-- (void)patchObject:(id)object
-               path:(NSString *)path
-         parameters:(NSDictionary *)parameters
-            success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
-            failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure;
+- (NSOperation *)patchObject:(id)object
+                        path:(NSString *)path
+                  parameters:(NSDictionary *)parameters
+                     success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
+                     failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure;
 
 /**
  Creates an `RKObjectRequestOperation` with a `DELETE` request for the given object, and enqueues it to the manager's operation queue.
@@ -742,11 +742,11 @@ RKMappingResult, RKRequestDescriptor, RKResponseDescriptor;
  @see [RKRouter URLForObject:method:]
  @see [RKObjectManager appropriateObjectRequestOperationWithObject:method:path:parameters:]
  */
-- (void)deleteObject:(id)object
-                path:(NSString *)path
-          parameters:(NSDictionary *)parameters
-             success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
-             failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure;
+- (NSOperation *)deleteObject:(id)object
+                         path:(NSString *)path
+                   parameters:(NSDictionary *)parameters
+                      success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
+                      failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure;
 
 ///------------------------------------------------
 /// @name Managing Request and Response Descriptors

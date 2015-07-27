@@ -688,11 +688,11 @@ static NSString *RKMIMETypeFromAFHTTPClientParameterEncoding(AFHTTPClientParamet
     return [NSURL URLWithString:path relativeToURL:self.baseURL];
 }
 
-- (void)getObjectsAtPathForRelationship:(NSString *)relationshipName
-                               ofObject:(id)object
-                             parameters:(NSDictionary *)parameters
-                                success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
-                                failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure
+- (NSOperation *)getObjectsAtPathForRelationship:(NSString *)relationshipName
+                                        ofObject:(id)object
+                                      parameters:(NSDictionary *)parameters
+                                         success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
+                                         failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure
 {
     RKRoute *route = [self.router.routeSet routeForRelationship:relationshipName ofClass:[object class] method:RKRequestMethodGET];
     NSDictionary *interpolatedParameters = nil;
@@ -705,13 +705,14 @@ static NSString *RKMIMETypeFromAFHTTPClientParameterEncoding(AFHTTPClientParamet
     
     [operation setCompletionBlockWithSuccess:success failure:failure];
     [self enqueueObjectRequestOperation:operation];
+    return operation;
 }
 
-- (void)getObjectsAtPathForRouteNamed:(NSString *)routeName
-                               object:(id)object
-                           parameters:(NSDictionary *)parameters
-                              success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
-                              failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure
+- (NSOperation *)getObjectsAtPathForRouteNamed:(NSString *)routeName
+                                        object:(id)object
+                                    parameters:(NSDictionary *)parameters
+                                       success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
+                                       failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure
 {
     NSParameterAssert(routeName);    
     RKRoute *route = [self.router.routeSet routeForName:routeName];
@@ -727,77 +728,84 @@ static NSString *RKMIMETypeFromAFHTTPClientParameterEncoding(AFHTTPClientParamet
     
     [operation setCompletionBlockWithSuccess:success failure:failure];
     [self enqueueObjectRequestOperation:operation];
+    return operation;
 }
 
-- (void)getObjectsAtPath:(NSString *)path
-              parameters:(NSDictionary *)parameters
-                 success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
-                 failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure
+- (NSOperation *)getObjectsAtPath:(NSString *)path
+                       parameters:(NSDictionary *)parameters
+                          success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
+                          failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure
 {
     NSParameterAssert(path);
     RKObjectRequestOperation *operation = [self appropriateObjectRequestOperationWithObject:nil method:RKRequestMethodGET path:path parameters:parameters];
     [operation setCompletionBlockWithSuccess:success failure:failure];
     [self enqueueObjectRequestOperation:operation];
+    return operation;
 }
 
-- (void)getObject:(id)object
-             path:(NSString *)path
-       parameters:(NSDictionary *)parameters
-          success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
-          failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure
+- (NSOperation *)getObject:(id)object
+                      path:(NSString *)path
+                parameters:(NSDictionary *)parameters
+                   success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
+                   failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure
 {
     NSAssert(object || path, @"Cannot make a request without an object or a path.");
     RKObjectRequestOperation *operation = [self appropriateObjectRequestOperationWithObject:object method:RKRequestMethodGET path:path parameters:parameters];
     [operation setCompletionBlockWithSuccess:success failure:failure];
     [self enqueueObjectRequestOperation:operation];
+    return operation;
 }
 
-- (void)postObject:(id)object
-              path:(NSString *)path
-        parameters:(NSDictionary *)parameters
-           success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
-           failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure
+- (NSOperation *)postObject:(id)object
+                       path:(NSString *)path
+                 parameters:(NSDictionary *)parameters
+                    success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
+                    failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure
 {
     NSAssert(object || path, @"Cannot make a request without an object or a path.");
     RKObjectRequestOperation *operation = [self appropriateObjectRequestOperationWithObject:object method:RKRequestMethodPOST path:path parameters:parameters];
     [operation setCompletionBlockWithSuccess:success failure:failure];
     [self enqueueObjectRequestOperation:operation];
+    return operation;
 }
 
-- (void)putObject:(id)object
-             path:(NSString *)path
-       parameters:(NSDictionary *)parameters
-          success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
-          failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure
+- (NSOperation *)putObject:(id)object
+                      path:(NSString *)path
+                parameters:(NSDictionary *)parameters
+                   success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
+                   failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure
 {
     NSAssert(object || path, @"Cannot make a request without an object or a path.");
     RKObjectRequestOperation *operation = [self appropriateObjectRequestOperationWithObject:object method:RKRequestMethodPUT path:path parameters:parameters];
     [operation setCompletionBlockWithSuccess:success failure:failure];
     [self enqueueObjectRequestOperation:operation];
+    return operation;
 }
 
-- (void)patchObject:(id)object
-               path:(NSString *)path
-         parameters:(NSDictionary *)parameters
-            success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
-            failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure
+- (NSOperation *)patchObject:(id)object
+                        path:(NSString *)path
+                  parameters:(NSDictionary *)parameters
+                     success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
+                     failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure
 {
     NSAssert(object || path, @"Cannot make a request without an object or a path.");
     RKObjectRequestOperation *operation = [self appropriateObjectRequestOperationWithObject:object method:RKRequestMethodPATCH path:path parameters:parameters];
     [operation setCompletionBlockWithSuccess:success failure:failure];
     [self enqueueObjectRequestOperation:operation];
+    return operation;
 }
 
-- (void)deleteObject:(id)object
-                path:(NSString *)path
-          parameters:(NSDictionary *)parameters
-             success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
-             failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure
+- (NSOperation *)deleteObject:(id)object
+                         path:(NSString *)path
+                   parameters:(NSDictionary *)parameters
+                      success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
+                      failure:(void (^)(RKObjectRequestOperation *operation, NSError *error))failure
 {
     NSAssert(object || path, @"Cannot make a request without an object or a path.");
     RKObjectRequestOperation *operation = [self appropriateObjectRequestOperationWithObject:object method:RKRequestMethodDELETE path:path parameters:parameters];
     [operation setCompletionBlockWithSuccess:success failure:failure];
     [self enqueueObjectRequestOperation:operation];
+    return operation;
 }
 
 - (RKPaginator *)paginatorWithPathPattern:(NSString *)pathPattern
